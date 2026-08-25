@@ -3,6 +3,7 @@ CMPS 2200  Recitation 1
 """
 
 ### the only imports needed are here
+from tabulate import tabulate
 import tabulate
 import time
 ###
@@ -38,13 +39,26 @@ def _binary_search(mylist, key, left, right):
       index of key in mylist, or -1 if not present.
     """
     ### TODO
-    pass
+    #base case
+    if len(mylist) == 0 or left > right:
+        return -1
+    mid = (left + right) // 2 #// always return an integer
+    # or : mid =left +(right - left) // 2
+    if mylist[mid] == key:
+        return mid
+    elif mylist[mid] > key:
+        return _binary_search(mylist, key, left, mid - 1)
+    else:
+        return _binary_search(mylist, key, mid + 1, right)
+pass
 
 def test_binary_search():
     assert binary_search([1,2,3,4,5], 5) == 4
     assert binary_search([1,2,3,4,5], 1) == 0
     assert binary_search([1,2,3,4,5], 6) == -1
     ### TODO: add two more tests here.
+    assert binary_search([1,2,3,4,5], 3) == 2
+    assert binary_search([1,2,3,4,5], 0) == -1
     pass
 
 
@@ -53,12 +67,12 @@ def time_search(search_fn, mylist, key):
     Return the number of milliseconds to run this
     search function on this list.
 
-    Note 1: `sort_fn` parameter is a function.
+    Note 1: `search_fn` parameter is a function.
     Note 2: time.time() returns the current time in seconds. 
     You'll have to multiple by 1000 to get milliseconds.
 
     Params:
-      sort_fn.....the search function
+      search_fn...the search function
       mylist......the list to search
       key.........the search key 
 
@@ -67,7 +81,13 @@ def time_search(search_fn, mylist, key):
       search function on this input.
     """
     ### TODO
-    pass
+    start_time = time.time()
+
+    search_fn(mylist, key)
+
+    end_time = time.time()
+    return (end_time - start_time) * 1000
+    #pass
 
 def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
     """
@@ -85,7 +105,18 @@ def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
       for each method to run on each value of n
     """
     ### TODO
-    pass
+    results = []
+    for i in sizes: 
+        n=int(i)
+
+        mylist = list(range(n))
+
+        binary_search_time = time_search(binary_search, mylist, -1)
+        linear_search_time = time_search(linear_search, mylist, -1)
+
+        results.append((n, linear_search_time, binary_search_time))
+
+    return results
 
 def print_results(results):
     """ done """
@@ -93,3 +124,5 @@ def print_results(results):
         headers=['n', 'linear', 'binary'],
         floatfmt=".3f",
         tablefmt="github"))
+
+print_results(compare_search())
