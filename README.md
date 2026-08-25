@@ -1,4 +1,4 @@
-# CMPS 2200  Recitation 01
+# CMPS 2200  Recitation 
 
 In this recitation, we will investigate asymptotic complexity. 
 
