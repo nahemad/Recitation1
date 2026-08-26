@@ -29,7 +29,7 @@ Binary: the middle
 | 10000000 |  173.244 |    0.030 |
 
 - **9) (1 pts)** Do the theoretical running times match your empirical results?
-yes
+yes. linear search increases linearly while binary search increases at a miuch slower rate which matches with a logarithmic growth. 
 
 - **10a) (1 pts)** What is worst-case complexity of searching a list of $n$ elements $k$ times using linear search? 
 
